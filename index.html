@@ -137,6 +137,10 @@
 
     function loadTopic(topic) {
         const data = topicData[topic];
+        // ✅ Close only on small screens
+    if (window.innerWidth < 768) {
+        document.getElementById('sidebar-wrapper').classList.add('collapsed');
+    }
         document.getElementById('dashboardContent').innerHTML = `
             <div class="card shadow-lg custom-card">
                 <div class="card-header d-flex justify-content-between align-items-center">
