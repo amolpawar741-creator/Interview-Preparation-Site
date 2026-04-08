@@ -1,0 +1,140 @@
+## index.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <nav class="navbar navbar-dark top-header px-3">
+        <button class="btn toggle-btn" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h4 class="text-white mb-0">Interview Preparation Dashboard</h4>
+    </nav>
+
+    <div class="d-flex" id="wrapper">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar" id="sidebar-wrapper">
+            <div class="sidebar-heading">Topics</div>
+
+            <div class="accordion" id="menuAccordion">
+
+                <div class="accordion-item bg-transparent border-0">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed menu-parent" type="button" data-bs-toggle="collapse" data-bs-target="#dotnetMenu">
+                            <i class="fa-brands fa-microsoft me-2"></i> .NET Core
+                        </button>
+                    </h2>
+                    <div id="dotnetMenu" class="accordion-collapse collapse">
+                        <div class="accordion-body p-0">
+                            <a href="#" class="menu-child" onclick="loadTopic('middleware')">Middleware Pipeline</a>
+                            <a href="#" class="menu-child" onclick="loadTopic('dependency')">Dependency Injection</a>
+                            <a href="#" class="menu-child" onclick="loadTopic('routing')">Routing</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-transparent border-0">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed menu-parent" type="button" data-bs-toggle="collapse" data-bs-target="#sqlMenu">
+                            <i class="fas fa-database me-2"></i> SQL Server
+                        </button>
+                    </h2>
+                    <div id="sqlMenu" class="accordion-collapse collapse">
+                        <div class="accordion-body p-0">
+                            <a href="#" class="menu-child" onclick="loadTopic('joins')">SQL Joins</a>
+                            <a href="#" class="menu-child" onclick="loadTopic('indexing')">Indexing</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT -->
+        <div id="page-content-wrapper" class="container-fluid p-4">
+            <div id="dashboardContent">
+                <div class="welcome-box">
+                    <h3>Welcome 👋</h3>
+                    <p>Select any topic from sidebar to view interview questions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+        document.getElementById('sidebar-wrapper').classList.toggle('collapsed');
+    });
+
+    const topicData = {
+        middleware: {
+            question: 'What is Middleware in .NET Core?',
+            answer: 'Middleware are software components assembled into application pipeline to handle requests and responses.',
+            example: 'https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/'
+        },
+        dependency: {
+            question: 'What is Dependency Injection?',
+            answer: 'Dependency Injection is design pattern used to achieve Inversion of Control between classes and dependencies.',
+            example: 'https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection'
+        },
+        routing: {
+            question: 'What is Routing in ASP.NET Core?',
+            answer: 'Routing maps incoming requests to controller actions or endpoints.',
+            example: 'https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing/'
+        },
+        joins: {
+            question: 'What are SQL Joins?',
+            answer: 'SQL Joins combine rows from two or more tables based on related columns.',
+            example: 'https://www.w3schools.com/sql/sql_join.asp'
+        },
+        indexing: {
+            question: 'What is Indexing in SQL?',
+            answer: 'Indexes improve speed of data retrieval operations on database tables.',
+            example: 'https://www.w3schools.com/sql/sql_create_index.asp'
+        }
+    };
+
+    function loadTopic(topic) {
+        const data = topicData[topic];
+        document.getElementById('dashboardContent').innerHTML = `
+            <div class="card shadow-lg custom-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>${data.question}</span>
+                    <button class="btn btn-sm btn-light" data-bs-toggle="collapse" data-bs-target="#answerCollapse">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div id="answerCollapse" class="collapse show">
+                    <div class="card-body">
+                        <p>${data.answer}</p>
+                        <a href="${data.example}" target="_blank" class="btn btn-primary btn-sm">
+                            <i class="fas fa-code"></i> View Code Example
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+</script>
+
+</body>
+</html>
