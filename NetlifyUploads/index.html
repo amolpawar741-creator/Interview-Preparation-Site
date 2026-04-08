@@ -42,8 +42,8 @@
                     <div id="dotnetMenu" class="accordion-collapse collapse">
                         <div class="accordion-body p-0">
                             <a href="#" class="menu-child" onclick="loadTopic('BasicAdvance')">Basics → Advanced</a>
-                            <a href="#" class="menu-child" onclick="loadTopic('middlewareorder')">Middleware Ordering</a>
-                            <a href="#" class="menu-child" onclick="loadTopic('IEnumerable')">IEnumerable/IQueryable</a>
+                            <a href="#" class="menu-child" onclick="loadTopic('dependency')">Dependency Injection</a>
+                            <a href="#" class="menu-child" onclick="loadTopic('routing')">Routing</a>
                         </div>
                     </div>
                 </div>
@@ -109,19 +109,15 @@
 </div>`,
             example: 'staticPages/requestpipeline.html'
         },
-        middlewareorder: {
-            question: 'Explain middleware ordering with real example.',
-            answer: `Middleware is like a pipeline where request goes step by step.<br/>
-👉 It runs top to bottom for request and bottom to top for response.<br/>
-👉 Order matters — for example, authentication must come before authorization, otherwise it won’t work.`,
-            example: 'staticPages/middleware.html'
+        dependency: {
+            question: 'What is Dependency Injection?',
+            answer: 'Dependency Injection is design pattern used to achieve Inversion of Control between classes and dependencies.',
+            example: 'https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection'
         },
-        IEnumerable: {
-            question: 'Difference between IEnumerable, IQueryable, List (real DB impact)',
-            answer: `👉 IEnumerable → gets all data from DB first, then filters in memory (slow for big data)<br/>
-👉 IQueryable → applies filter in DB itself (fast & efficient)<br/>
-👉 List → already executed result (data is fully loaded in memory)`,
-            example: 'staticPages/ienumqueryable.html'
+        routing: {
+            question: 'What is Routing in ASP.NET Core?',
+            answer: 'Routing maps incoming requests to controller actions or endpoints.',
+            example: 'https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing/'
         },
         joins: {
             question: 'What are SQL Joins?',
@@ -149,7 +145,7 @@
                     <div class="card-body">
                         <p>${data.answer}</p>
                         <a href="${data.example}" target="_blank" class="btn btn-primary btn-sm">
-                            <i class="fas fa-code"></i> View Full Explanation
+                            <i class="fas fa-code"></i> View Code Example
                         </a>
                     </div>
                 </div>

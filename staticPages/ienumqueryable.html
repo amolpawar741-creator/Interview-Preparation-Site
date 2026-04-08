@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IEnumerable vs IQueryable vs List</title>
+    <style>
+        body { font-family: Arial; background:#f4f6f9; padding:20px; }
+        .card { background:#fff; padding:20px; margin-bottom:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+        h2 { color:#333; }
+        code { display:block; background:#272822; color:#f8f8f2; padding:10px; border-radius:6px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Concept</h2>
+    <ul>
+        <li><strong>IEnumerable</strong> → Works in memory</li>
+        <li><strong>IQueryable</strong> → Works on database</li>
+        <li><strong>List</strong> → Fully loaded data</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Real DB Example</h2>
+    <p>Assume table has 1,00,000 records</p>
+
+    <h3>IEnumerable</h3>
+    <code>
+var data = context.Users.AsEnumerable()
+                        .Where(x => x.Age > 30)
+                        .ToList();
+    </code>
+    <p>
+        🔴 First loads ALL 1,00,000 records from DB <br>
+        🔴 Then filters in memory <br>
+        ❌ Slow & high memory usage
+    </p>
+
+    <h3>IQueryable</h3>
+    <code>
+var data = context.Users
+                        .Where(x => x.Age > 30)
+                        .ToList();
+    </code>
+    <p>
+        🟢 SQL runs in DB: SELECT * FROM Users WHERE Age > 30 <br>
+        🟢 Only filtered data comes <br>
+        ✅ Fast & efficient
+    </p>
+
+    <h3>List</h3>
+    <code>
+var data = context.Users.ToList();
+var result = data.Where(x => x.Age > 30);
+    </code>
+    <p>
+        🔴 DB hit already done <br>
+        🔴 All data loaded in memory <br>
+        ❌ Filtering happens after loading
+    </p>
+</div>
+
+<div class="card">
+    <h2>Key Difference (DB Impact)</h2>
+    <ul>
+        <li>IQueryable → Filtering in DB (best performance)</li>
+        <li>IEnumerable → Filtering in memory (bad for large data)</li>
+        <li>List → Data already fetched (no DB optimization)</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Interview One-Liner</h2>
+    <p>
+        IQueryable executes query in database, while IEnumerable and List bring data into memory first, 
+        which impacts performance for large datasets.
+    </p>
+</div>
+
+</body>
+</html>

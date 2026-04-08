@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Middleware Ordering in ASP.NET Core</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        code {
+            background: #272822;
+            color: #f8f8f2;
+            display: block;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        .good { color: green; }
+        .bad { color: red; }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+        <h1>Middleware Ordering in ASP.NET Core</h1>
+        <p><strong>Key Concept:</strong></p>
+        <ul>
+            <li>Request flows <strong>Top → Bottom</strong></li>
+            <li>Response flows <strong>Bottom → Top</strong></li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Real-Life Analogy</h2>
+        <p>Entering a company:</p>
+        <ul>
+            <li>Security Check (Authentication)</li>
+            <li>Reception (Routing)</li>
+            <li>Manager (Controller)</li>
+            <li>Exit Process (Response)</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Correct Middleware Order</h2>
+        <code>
+var app = builder.Build();
+
+app.UseExceptionHandler("/error");  
+app.UseHttpsRedirection();         
+app.UseStaticFiles();              
+app.UseRouting();                  
+app.UseAuthentication();           
+app.UseAuthorization();            
+app.MapControllers();              
+
+app.Run();
+        </code>
+    </div>
+
+    <div class="card">
+        <h2>Request Flow</h2>
+        <ul>
+            <li>Exception Handler</li>
+            <li>HTTPS Redirection</li>
+            <li>Static Files</li>
+            <li>Routing</li>
+            <li>Authentication</li>
+            <li>Authorization</li>
+            <li>Controller Execution</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Wrong Order Example</h2>
+        <code>
+app.UseAuthorization();
+app.UseAuthentication();
+        </code>
+        <p class="bad">❌ Problem: Authorization runs before Authentication</p>
+    </div>
+
+    <div class="card">
+        <h2>Correct Order</h2>
+        <code>
+app.UseAuthentication();
+app.UseAuthorization();
+        </code>
+        <p class="good">✔️ Authentication runs before Authorization</p>
+    </div>
+
+    <div class="card">
+        <h2>Another Common Mistake</h2>
+        <code>
+app.UseRouting();
+app.UseEndpoints(...);
+app.UseAuthentication(); // WRONG
+        </code>
+        <p class="bad">❌ Authentication should be before endpoint execution</p>
+    </div>
+
+    <div class="card">
+        <h2>Interview Answer</h2>
+        <p>
+            Middleware executes in the order registered for requests and in reverse order for responses. 
+            Correct ordering is critical—for example, authentication must come before authorization, 
+            and routing must come before endpoint execution.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Pro Tips</h2>
+        <ul>
+            <li>Static files can short-circuit the pipeline</li>
+            <li>Exception handler should be at the top</li>
+            <li>Custom middleware placement is important</li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>

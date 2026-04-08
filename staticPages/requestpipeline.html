@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASP.NET Core Request Pipeline</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+    }
+    .step {
+      font-weight: bold;
+      color: #4a90e2;
+    }
+    .summary {
+      background: #e8f0fe;
+      border-left: 5px solid #4a90e2;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    ul {
+      margin: 10px 0 0 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ASP.NET Core Request Pipeline</h1>
+
+    <div class="card">
+      <div class="step">1. Client Sends Request</div>
+      <p>Browser or API client sends an HTTP request (GET, POST, etc.).</p>
+    </div>
+
+    <div class="card">
+      <div class="step">2. Kestrel Web Server</div>
+      <p>Kestrel receives the request and creates an HttpContext object.</p>
+    </div>
+
+    <div class="card">
+      <div class="step">3. Middleware Pipeline</div>
+      <p>Request flows through middleware components.</p>
+      <ul>
+        <li>Can process request</li>
+        <li>Can call next middleware</li>
+        <li>Can stop pipeline</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="step">4. Routing</div>
+      <p>Matches request URL to the correct endpoint (Controller/Action).</p>
+    </div>
+
+    <div class="card">
+      <div class="step">5. Authentication & Authorization</div>
+      <p>Validates user identity and permissions.</p>
+    </div>
+
+    <div class="card">
+      <div class="step">6. Endpoint Execution</div>
+      <p>Controller action executes business logic and model binding occurs.</p>
+    </div>
+
+    <div class="card">
+      <div class="step">7. Response Creation</div>
+      <p>Returns JSON, View, or status code as response.</p>
+    </div>
+
+    <div class="card">
+      <div class="step">8. Response Through Middleware</div>
+      <p>Response flows back through middleware (logging, compression, etc.).</p>
+    </div>
+
+    <div class="card">
+      <div class="step">9. Response Sent to Client</div>
+      <p>Kestrel sends the final response back to the client.</p>
+    </div>
+
+    <div class="summary">
+      <strong>Interview Summary:</strong>
+      <p>
+        Request → Kestrel → Middleware Pipeline → Routing → Controller → Response → Middleware → Client
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>
