@@ -134,7 +134,10 @@
             example: 'https://www.w3schools.com/sql/sql_create_index.asp'
         }
     };
-
+    
+window.onload = function () {
+    document.getElementById('sidebar-wrapper').classList.add('collapsed');
+};
     function loadTopic(topic) {
         const data = topicData[topic];
         // ✅ Close only on small screens
